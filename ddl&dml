@@ -1,0 +1,55 @@
+create database store ;
+create table countries ( 
+code int primary key, 
+name varchar (20) unique,
+contlnent_name varchar(20) not null 
+); 
+create table users (
+id int primary key ,
+full_name varchar(20),
+email varchar (20) unique, 
+gender char (1) check (gender ='m'or gender='f'),
+date_of_birth varchar(15),
+created_at datetime ,
+countries_code int ,
+foreign key (countries_code) references countries (code)
+); 
+create table orders (
+id int primary key ,
+user_id int , 
+status varchar(6) check (status= 'start' or status='finish'),
+created_at datetime  ,
+foreign key (user_id) references users (id)
+);
+create table order_products(
+order_id int,
+products_id int ,
+quantiy int default current_timestamp ,
+primary key (order_id ,product_id ),
+foreign key (order_id) references orders (id),
+foreign key(product_id) references products (id)
+);
+create table products (
+id int primary key ,
+name varchar(10) not null,
+price int  default 
+ current_timestamp,
+
+status varchar(10) check (status= 'valid' or status='expired'),
+created_at datetime 
+
+);
+#dml - insert
+insert into  countries  values(400,'afrah','wo');
+insert into users values (199,'afrah salman','afrah@a.com','f','1997-7-21','1000-01-01 00:00:00' ,400);
+insert into orders values(990,199,'start','1000-01-01 00:00:00');
+insert into order_products values(990,399,current_timestamp);
+insert into products values (896,'amal',current_timestamp,'valid','1000-01-01 00:00:00'); 
+insert into products values (876,'asma',current_timestamp,'valid','1000-01-01 00:00:00'); 
+ #dml -update
+ update countries set name ='sara' where id =400; 
+ #dml -delete
+ delete from products where id =896; 
+
+
+
